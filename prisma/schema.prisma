@@ -1,0 +1,63 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  User
+  Ticher
+  Admin
+}
+
+enum Gender {
+  Male
+  Female
+  Demigirl
+  Neutrois
+  Other
+}
+
+model User {
+  id            Int       @id @default(autoincrement())
+  name          String
+  email         String    @unique
+  password      String
+  roles         Role      @default(User)
+  gender        Gender    @default(Neutrois)
+  age           Int       @default(0)
+  aboutMe       String    @default("")
+  blocked       Boolean   @default(false)
+  createdAt     DateTime  @default(now())
+  birthday      DateTime?
+  ticher        Ticher?
+  likedSessions Session[] @relation("UserLikedSessions")
+}
+
+model Ticher {
+  id         Int      @id @default(autoincrement())
+  accountId  Int      @unique
+  account    User     @relation(fields: [accountId], references: [id])
+  createdAt  DateTime @default(now())
+  skills     String   @default("")
+  reting     Int      @default(0)  
+  sessions   Session[]
+}
+
+model Session {
+  id        Int      @id @default(autoincrement())
+  title     String   @unique
+  content   String
+  descriptions String?
+  price     Float @default(0)
+  duration  Int?
+  authorId  Int
+  author    Ticher   @relation(fields: [authorId], references: [accountId])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  likedBy   User[]   @relation("UserLikedSessions")
+  Videos String @default("[]") // JSON: ["Video URL 1", "Video URL 2"]
+}

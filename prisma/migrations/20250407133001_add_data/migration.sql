@@ -1,0 +1,4 @@
+-- CreateTable
+CREATE TABLE "meri" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT
+);
