@@ -12,7 +12,7 @@ export class SessionController {
   constructor(private readonly sessionService: SessionService) {}
 
   @Post('/add')
-  @Roles(Role.Ticher, Role.Admin)
+  @Roles(Role.Teacher, Role.Admin)
   create(@Request() req: Req, @Body() createSessionDto: CreateSessionDto) {
     const userId = req.payload?.sub ?? -1;
     createSessionDto.authorId = userId;
@@ -32,14 +32,14 @@ export class SessionController {
     return this.sessionService.findOne(+id);
   }
 
-  @Roles(Role.Ticher, Role.Admin)
+  @Roles(Role.Teacher, Role.Admin)
   @Put('update/:id')
   update(@Request() req: Req, @Param('id') id: string, @Body() updateSessionDto: UpdateSessionDto) {
     const userId = req.payload?.sub ?? -1;
     return this.sessionService.update(+id, updateSessionDto, userId);
   }
 
-  @Roles(Role.Ticher, Role.Admin)
+  @Roles(Role.Teacher, Role.Admin)
   @Delete('delete/:id')
   remove(@Request() req: Req, @Param('id') id: string) {
     const userId = req.payload?.sub ?? -1;

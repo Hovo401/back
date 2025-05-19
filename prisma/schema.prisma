@@ -9,7 +9,7 @@ datasource db {
 
 enum Role {
   User
-  Ticher
+  Teacher
   Admin
 }
 
@@ -49,15 +49,19 @@ model Ticher {
 
 model Session {
   id        Int      @id @default(autoincrement())
-  title     String   @unique
+  fullName  String   @unique
   content   String
-  descriptions String?
+  about     String?
+  skills    String?
+  experience String?
+  education String?
+  languages String?
   price     Float @default(0)
-  duration  Int?
+  rating    Int?
   authorId  Int
   author    Ticher   @relation(fields: [authorId], references: [accountId])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   likedBy   User[]   @relation("UserLikedSessions")
-  Videos String @default("[]") // JSON: ["Video URL 1", "Video URL 2"]
+  videoUrl String @default("[]") 
 }

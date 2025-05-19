@@ -1,9 +1,13 @@
 export class CreateSessionDto {
-    title: string;
+    fullName: string;
     content: string;
-    authorId: number;
-    descriptions?: string | null;
-    price?: number;
-    duration?: number | null;
-    Videos?: string;
+    authorId:  number;
+    about?:    string;
+    skills?:    string;
+    experience?: string;
+    education?: string;
+    languages?: string;
+    price?:     number;
+    rating?:    number;
+    videoUrl?: string;
 }
